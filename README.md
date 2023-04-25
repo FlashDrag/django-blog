@@ -257,6 +257,9 @@ The `showmigrations` command shows all migrations that have been applied or unap
 - Add the database URL to the `.env` file.
 
 ### Cloudinary Setup
+Storage backend for Django static files and media uploads.
+https://pypi.org/project/django-cloudinary-storage/
+
 - Create a Cloudinary account.
 - For Primary interest, you can choose Programmable Media for image and video APIs.
 - Copy the API Environment Variable from the Cloudinary dashboard.
@@ -266,7 +269,9 @@ The `showmigrations` command shows all migrations that have been applied or unap
     $ pip install dj3-cloudinary-storage
     ```
 
-- **Configure `staticfiles` and `media` storage**:
+    _`dj3-cloudinary-storage` package is a fork of the django-cloudinary-storage package, specifically adapted for Django 3.x compatibility._
+
+- **Configure `staticfiles` and `media` storage with Cloudinary**:
     - Add the following to the `settings.py` file:
         ```
 
@@ -278,32 +283,48 @@ The `showmigrations` command shows all migrations that have been applied or unap
             },
         ]
 
-
         # Cloudinary settings
         INSTALLED_APPS = [
-            ...
-            'django.contrib.messages',
+            # ...
             'cloudinary_storage',
             'django.contrib.staticfiles',
             'cloudinary',
-            ...
+            # ...
         ]
 
-        # Static files (CSS, JavaScript, Images)
+        # URL path for your static files.
         STATIC_URL = '/static/'
-        STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
-        STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),]
+        # Cloudinary's storage for static files
+        STATICFILES_STORAGE = 'cloudinary_storage.storage.'\
+            'StaticHashedCloudinaryStorage'
+        # Dir where your static files are stored during development
+        STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
+        # Dir where static files will be collected using python manage.py collectstatic
         STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+        # Credentials for the cloudinary_storage
+        CLOUDINARY_STORAGE = {
+            'CLOUDINARY_URL': os.getenv('CLOUDINARY_URL'),
+        }
 
+        # URL path for media files
         MEDIA_URL = '/media/'
+        # Media cloudinary storage
         DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    ```
+        ```
 
     - Create a `media`, `static` and `templates` folders in the root directory of the project:
         ```
         $ mkdir media static templates
         ```
+
+    The `$ python manage.py collectstatic` command will be run automatically when deploying. It will copy all the static files from the `static` folder to the `staticfiles` folder and upload them to the cloud.
+
+    If you don't use static files, or you prefer to run `collectstatic` locally and push them to the cloudinary storage manually, you can prevent this command from running automatically during deployment on Heroku, by setting `DISABLE_COLLECTSTATIC` to `1` in the Heroku config vars.
+        ```
+        $ heroku config:set DISABLE_COLLECTSTATIC=1
+        ```
+
 
 ### Heroku CLI deployment instructions
 [Django-Heroku settings.py example](https://github.com/heroku/python-getting-started/blob/main/gettingstarted/settings.py)
@@ -341,7 +362,7 @@ The `showmigrations` command shows all migrations that have been applied or unap
     ```
     ALLOWED_HOSTS = ['<name of app>.herokuapp.com', '127.0.0.1']
     ```
-- Commit and push the code to Heroku:
+- Commit and push the code to Heroku or **GitHub and deploy from there**:
     ```
     $ git add .
     $ git commit -m "Setup Heroku files for deployment"
