@@ -118,7 +118,7 @@
         import os
 
         development = os.getenv('DEVELOPMENT', False)
-        DEBUG = development
+        DEBUG = os.getenv('DEBUG', False)
         SECRET_KEY = os.getenv('SECRET_KEY')
         ```
 4. Run the Django server:
@@ -184,6 +184,7 @@
     _Allows you to access the admin UI panel and manage the database_
 
 - ### Database Setup
+
 - Install `psycopg2` database adapter to use PostgreSQL with Django.
 - Install `dj-database-url` to use PostgreSQL with Django (_dj-database-url parses the database URL from the environment variable DATABASE_URL and configures the DATABASES setting accordingly_).
 
@@ -195,7 +196,7 @@
 
         ```
         development = os.getenv('DEVELOPMENT', False)
-        DEBUG = development
+        DEBUG = os.getenv('DEBUG', False)
 
         if development:
             DATABASES = {
@@ -343,7 +344,7 @@ https://pypi.org/project/django-cloudinary-storage/
     ```
 - Create a Heroku Procfile:
     ```
-     echo web: gunicorn <name_of_project>.wsgi:application > Procfile
+    $ echo web: gunicorn <name_of_project>.wsgi:application > Procfile
     # e.g: `web: gunicorn django_todo.wsgi:application`
     ```
 - Login to Heroku:
