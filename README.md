@@ -287,44 +287,68 @@ https://pypi.org/project/django-cloudinary-storage/
         # Cloudinary settings
         INSTALLED_APPS = [
             # ...
-            'cloudinary_storage',
+            'cloudinary_storage',  # Must be above `django.contrib.staticfiles`, to override default static storage
             'django.contrib.staticfiles',
             'cloudinary',
             # ...
         ]
 
-        # URL path for your static files.
-        STATIC_URL = '/static/'
-        # Cloudinary's storage for static files
-        STATICFILES_STORAGE = 'cloudinary_storage.storage.'\
-            'StaticHashedCloudinaryStorage'
-        # Dir where your static files are stored during development
-        STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
-        # Dir where static files will be collected using python manage.py collectstatic
-        STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+        # STATIC FILES(CSS, JS, IMAGES)
 
-        # Credentials for the cloudinary_storage
+        # Credentials for the cloudinary_storage. Can be found in the Cloudinary dashboard
         CLOUDINARY_STORAGE = {
             'CLOUDINARY_URL': os.getenv('CLOUDINARY_URL'),
         }
+        # OR
+        CLOUDINARY_STORAGE = {
+            'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+            'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+            'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+        }
+
+        # URL path for your static files.
+        STATIC_URL = '/static/'
+        # Dir where your static files are stored during development
+        STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
+        # Dir where static files are stored during production, after running collectstatic
+        STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+        # Cloudinary's storage for static files
+        STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
         # URL path for media files
         MEDIA_URL = '/media/'
         # Media cloudinary storage
         DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
         ```
+    - **To separate static files for each project on cloudinary single acc, add project name to following settings**:
+        ```
+        STATIC_URL = '/static/django_blog/'
+        STATICFILES_DIRS = [os.path.join(BASE_DIR, "static/django_blog"), ]
+        ```
 
-    - Create a `media`, `static` and `templates` folders in the root directory of the project:
+    - Create a `media`, `static/django_blog` and `templates` folders in the root directory of the project:
         ```
         $ mkdir media static templates
         ```
+    - Create a `base.html` file in the `templates` folder and add the following:
+        ```
+        {% load static %}
+        ```
+    - Run the following command to collect all static files from the `static` folder to the `staticfiles` folder and upload them to the cloud:
+        ```
+        $ python manage.py collectstatic --upload-unhashed-files # upload all files even if they didn't change
+        ```
 
-    The `$ python manage.py collectstatic` command will be run automatically when deploying. It will copy all the static files from the `static` folder to the `staticfiles` folder and upload them to the cloud.
+    Usually the `$ python manage.py collectstatic` command runs automatically when deploying on HEROKU.
 
-    If you don't use static files, or you prefer to run `collectstatic` locally and push them to the cloudinary storage manually, you can prevent this command from running automatically during deployment on Heroku, by setting `DISABLE_COLLECTSTATIC` to `1` in the Heroku config vars.
+    If you don't use static files, you can prevent this command from running automatically during deployment on Heroku, by setting `DISABLE_COLLECTSTATIC` to `1` in the Heroku config vars. If you already run this command manually, you don't have to disable it on HEROKU, as it won't upload the files again if they didn't change.
         ```
         $ heroku config:set DISABLE_COLLECTSTATIC=1
         ```
+
+    **Notes:**
+    - In production, you must set `DEBUG` to `False` to fetch static files from Cloudinary. With `DEBUG` equal to `True`, Django `staticfiles` app will use your local files for easier and faster development (unless you use `cloudinary_static` template tag).
 
 
 ### Heroku CLI deployment instructions
