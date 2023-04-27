@@ -156,7 +156,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static/django_blog"), ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # URL path for media files
-MEDIA_URL = '/media/'
+MEDIA_URL = '/media/django_blog/'
 # Media cloudinary storage
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post
+from .models import Post, Comment
 from django_summernote.admin import SummernoteModelAdmin
 
 # SummernoteModelAdmin is a subclass of ModelAdmin.
@@ -32,8 +32,26 @@ class PostAdmin(SummernoteModelAdmin):
 
     # search_fields adds a search bar at the top of the post list page
     # so we can search for posts by title or content
-    search_fields = ['title', 'content']
+    search_fields = ('title', 'content')
 
     # summernote_fields includes the fields of our model
     # that we want to use the editor for
     summernote_fields = ('content')
+
+
+@admin.register(Comment)
+class CommentAdmin(SummernoteModelAdmin):
+    list_display = ('name', 'body', 'post', 'created_on', 'approved')
+    list_filter = ('approved', 'created_on')
+    search_fields = ('name', 'email', 'body')
+
+    # List of functions that displyed as actions in the admin dropdown
+    actions = ['approve_comments']
+
+    def approve_comments(self, request, queryset):
+        '''
+        Changes the approved field to True for the selected comments
+        :param request: HttpRequest
+        :param queryset: QuerySet object representing the selected comments
+        '''
+        queryset.update(approved=True)
