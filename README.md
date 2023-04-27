@@ -82,7 +82,7 @@
     - body: TextField
     - created_on: DateTimeField
     - approved: BooleanField
-    
+
     **Options**: ascending order by created date
 
 
@@ -96,6 +96,8 @@
 - [Heroku](https://www.heroku.com/)
 
 ### Django Packages
+- [django-summernote](https://github.com/summernote/django-summernote) - WYSIWYG (full featured) editor for Django posts.
+
 - [django-crispy-forms](https://django-crispy-forms.readthedocs.io/en/latest/)
 
 ## Project Setup
@@ -276,6 +278,99 @@ The `showmigrations` command shows all migrations that have been applied or unap
     ```
     $ python manage.py showmigrations
     ```
+
+### Django Packages
+- #### Django Summernote
+It's a simple WYSIWYG editor for Django. It allows you to edit the content in a text area and format text content as you like.
+
+    [**Integrating Summernote In Django**:](https://djangocentral.com/integrating-summernote-in-django/)
+
+    ```
+    $ pip install django-summernote
+    ```
+
+    - Add `django_summernote` to the `INSTALLED_APPS` list in `settings.py`:
+
+        ```
+        INSTALLED_APPS = [
+            ...
+            'django_summernote',
+        ]
+
+        SUMMERNOTE_THEME = 'bs4'  # Show summernote with Bootstrap4
+        ```
+
+    - Add the following to the `urls.py` file of the project:
+
+        ```
+        from django.urls import path, include
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('summernote/', include('django_summernote.urls')),
+        ]
+        ```
+    - Run migrations:
+
+        ```
+        $ python manage.py migrate
+        ```
+    - Add the following to the `models.py` file of the app:
+
+        ```
+        from django.db import models
+        from django_summernote.fields import SummernoteTextField
+
+        class Post(models.Model):
+            ...
+            content = SummernoteTextField()
+        ```
+        _This will allow you to use the Summernote editor in the app_
+
+    - Add the following to the `admin.py` file of the app:
+
+        ```
+        from django.contrib import admin
+        from .models import Post
+        from django_summernote.admin import SummernoteModelAdmin
+
+        class PostAdmin(SummernoteModelAdmin):
+            summernote_fields = ('content',)
+        admin.site.register(Post, PostAdmin)
+        ```
+        _This will allow you to use the Summernote editor in the admin panel_
+
+    [**USAGE**:](https://github.com/summernote/django-summernote#usage)
+
+    - To use the Summernote editor in the admin panel, you need to add the following to `admin.py` file of the app:
+
+        ```
+        from django.contrib import admin
+        from .models import Post
+        from django_summernote.admin import SummernoteModelAdmin
+
+        @admin.register(Post)
+        class PostAdmin(SummernoteModelAdmin):
+            summernote_fields = ('content',)
+        ```
+    - To use the Summernote editor in the app, you need to add the following to `forms.py` file of the app:
+
+        ```
+        from django import forms
+        from .models import Post
+        from django_summernote.widgets import SummernoteWidget
+
+        class PostForm(forms.ModelForm):
+            class Meta:
+                model = Post
+                fields = '__all__'
+                widgets = {
+                    'content': SummernoteWidget(),
+                }
+        ```
+        _This will allow you to use the Summernote editor in the app_
+
+- #### Django Crispy Forms
 
 
 ## Deployment
