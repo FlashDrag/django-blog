@@ -53,6 +53,20 @@
     - Create drafts: As a Site Admin I can create draft posts so that I can finish writing the content later
     - Approve comments: As a Site Admin I can approve or disapprove comments so that I can filter out objectionable comments
 
+### Entity Relationship Diagram(ERD)
+- POST MODEL
+    - id: Primary Key, Auto Increment
+    - title: unique, max length 200
+    - author: One to many relationship(Foreign Key) with User Model
+    - created date: DateTimeField
+    - updated date: DateTimeField
+    - content: TextField
+    - image: CloudinaryField
+    - excerpt: TextField
+    - likes: Many to many relationship with User Model
+    - slug: SlugField, Unique, max length 200
+    - status: Integer, Choices (Draft, Published)
+
 
 
 
