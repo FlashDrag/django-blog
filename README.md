@@ -56,7 +56,7 @@
 ### Entity Relationship Diagram(ERD)
 - POST MODEL
     - id: Primary Key, Auto Increment
-    - title: unique, max length 200
+    - title: CharField, unique, max length 200
     - author: One to many relationship(Foreign Key) with User Model
     - created date: DateTimeField
     - updated date: DateTimeField
@@ -66,6 +66,14 @@
     - likes: Many to many relationship with User Model
     - slug: SlugField, Unique, max length 200
     - status: Integer, Choices (Draft, Published)
+
+- COMMENT MODEL
+    - post: One to many relationship(Foreign Key) with Post Model
+    - name: CharField, max length 80
+    - email: EmailField
+    - body: TextField
+    - created_on: DateTimeField
+    - approved: BooleanField
 
 
 
