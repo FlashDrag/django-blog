@@ -60,6 +60,7 @@
     **Fields**:
     - id: Primary Key, Auto Increment
     - title: CharField, unique, max length 200
+    - [slug](https://nemecek.be/blog/96/django-admin-tip-auto-generated-slug-content): SlugField, Unique, max length 200
     - author: One to many relationship(Foreign Key) with User Model
     - created date: DateTimeField
     - updated date: DateTimeField
@@ -67,7 +68,6 @@
     - image: CloudinaryField
     - excerpt: TextField
     - likes: Many to many relationship with User Model
-    - slug: SlugField, Unique, max length 200
     - status: Integer, Choices (Draft, Published)
 
     **Options**: descending order by created date

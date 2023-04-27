@@ -8,6 +8,9 @@ STATUS = ((0, "Draft"), (1, "Published"))
 class Post(models.Model):
     # CharField is a string field
     title = models.CharField(unique=True, max_length=200)
+    #  A slug is a short label for something, containing only letters, numbers,
+    # underscores or hyphens. Slugs are these human readable parts of an URL,
+    # that also let you identify a piece of content.
     slug = models.SlugField(unique=True, max_length=200)
     # - ForeignKey is a relationship field (many-to-one),
     #   it means that one user can have many posts
