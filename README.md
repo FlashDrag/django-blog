@@ -54,7 +54,10 @@
     - Approve comments: As a Site Admin I can approve or disapprove comments so that I can filter out objectionable comments
 
 ### Entity Relationship Diagram(ERD)
-- POST MODEL
+- #### POST MODEL
+    **Name**: Post
+
+    **Fields**:
     - id: Primary Key, Auto Increment
     - title: CharField, unique, max length 200
     - author: One to many relationship(Foreign Key) with User Model
@@ -67,13 +70,20 @@
     - slug: SlugField, Unique, max length 200
     - status: Integer, Choices (Draft, Published)
 
-- COMMENT MODEL
+    **Options**: descending order by created date
+
+- #### COMMENT MODEL
+    **Name**: Comment
+
+    **Fields**:
     - post: One to many relationship(Foreign Key) with Post Model
     - name: CharField, max length 80
     - email: EmailField
     - body: TextField
     - created_on: DateTimeField
     - approved: BooleanField
+    
+    **Options**: ascending order by created date
 
 
 
