@@ -20,7 +20,9 @@
 
 - Create new project board
 - Open **Workflows** from the <**...**> menu at the top-right of the board.
-- Enable the **Item added to project** workflow by toggling it on. _This enables the automation of moving issues to the **To Do** column when they are added to the project board._
+    - Enable the **Item added to project** workflow by toggling it on. _This enables the automation of moving issues to the **To Do** column when they are added to the project board._
+    - Enable the **Item closed** workflow and **Set value** to **Done**. _This enables the automation of moving issues to the **Done** column when they are closed._
+
 - Link the project board to the repository.
 - Create a user stories template:
     - Open the repository's settings.
