@@ -179,6 +179,14 @@
     - Add the app to the `INSTALLED_APPS` list in `settings.py`:
 
         ```
+        TEMPLATES = [
+            {
+            ...
+            'DIRS': [os.path.join(BASE_DIR, 'templates')],
+            ...
+            },
+        ]
+
         INSTALLED_APPS = [
             ...
             '<name of app>',
@@ -402,15 +410,6 @@ https://pypi.org/project/django-cloudinary-storage/
 - **Configure `staticfiles` and `media` storage with Cloudinary**:
     - Add the following to the `settings.py` file:
         ```
-
-        TEMPLATES = [
-            {
-            ...
-            'DIRS': [os.path.join(BASE_DIR, 'templates')],
-            ...
-            },
-        ]
-
         # Cloudinary settings
         INSTALLED_APPS = [
             # ...
@@ -434,37 +433,31 @@ https://pypi.org/project/django-cloudinary-storage/
         }
 
         # URL path for your static files.
-        STATIC_URL = '/static/'
-        # Dir where your static files are stored during development
+        # This is the URL path where your static files will be served from.
+        # Example path for cloudinary css file: `https://res.cloudinary.com/<cloud_name>/raw/upload/v1/static/django_blog/css/style.css'
+        # Dir where your static files are stored locally during development. This is where collectstatic will collect static files from.
         STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
+
         # Dir where static files are stored during production, after running collectstatic
         STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-        # Cloudinary's storage for static files
+        # Cloudinary's storage for static files with hashed names
         STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
         # URL path for media files
-        MEDIA_URL = '/media/'
+        MEDIA_URL = '/media/django_blog/'
         # Media cloudinary storage
         DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
         ```
-    - **To separate static files for each project on cloudinary single acc, add project name to following settings**:
-        ```
-        STATIC_URL = '/static/django_blog/'
-        STATICFILES_DIRS = [os.path.join(BASE_DIR, "static/django_blog"), ]
-        ```
-
-    - Create a `media`, `static/django_blog` and `templates` folders in the root directory of the project:
-        ```
-        $ mkdir media static templates
-        ```
+    - Create a `media` and `static` and in the root directory of the project or in the app directories. The `media` folder will contain all media files uploaded by users, and the `static` folder will contain all static files such as CSS, JS, and images.
     - Create a `base.html` file in the `templates` folder and add the following:
         ```
         {% load static %}
         ```
-    - Run the following command to collect all static files from the `static` folder to the `staticfiles` folder and upload them to the cloud:
+    - Deploy the app on HEROKU or run the following command to collect static files if the command didn't run automatically:
+
         ```
-        $ python manage.py collectstatic --upload-unhashed-files # upload all files even if they didn't change
+        $ python manage.py collectstatic
         ```
 
     Usually the `$ python manage.py collectstatic` command runs automatically when deploying on HEROKU.

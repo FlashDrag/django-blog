@@ -151,7 +151,7 @@ STATIC_URL = '/static/django_blog/'
 STATICFILES_STORAGE = 'cloudinary_storage.storage.'\
     'StaticHashedCloudinaryStorage'
 # Dir where your static files are stored during development
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static/django_blog"), ]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
 # Dir where static files will be collected using python manage.py collectstatic
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
