@@ -13,4 +13,4 @@ class PostList(generic.ListView):
     # Limit the number of posts per page to 6.
     # So, if the number of posts is greater than 6,
     # then django will automatically create pagination links
-    paginated_by = 6
+    paginate_by = 6

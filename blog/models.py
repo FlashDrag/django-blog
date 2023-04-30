@@ -23,7 +23,7 @@ class Post(models.Model):
     content = models.TextField()
     # - CloudinaryField is a field for storing images in Cloudinary
     # - default='placeholder' means if the image is not uploaded,
-    #   then a placeholder will be displayed
+    #   then a placeholder(default image) will be displayed
     featured_image = CloudinaryField('image', default='placeholder')
     # blank=True means the field is not required when creating a post
     excerpt = models.TextField(blank=True)
