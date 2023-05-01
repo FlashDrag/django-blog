@@ -430,6 +430,14 @@ It's an integrated set of Django applications dealing with account authenticatio
 - Go to the `/accounts/signup/` URL to create a new account.
     _Logout from the admin panel to use the allauth signup page, otherwise it will redirect to the admin panel_
 
+- Allauth provides a lot of non styled [overridable templates](https://django-allauth.readthedocs.io/en/latest/templates.html) templates and settings out of the box. To override the templates follow the steps below:
+    - Create a folder named `account` in the `templates` folder of the project
+    - Copy the templates from the `django-allauth` package to the `account` folder:
+        ```
+        $ cd ~/.virtualenvs/django-blog-env/lib/python3.11/site-packages/allauth/templates/account/* templates/account/
+        ```
+    - Now you can customize the templates as you like.
+
 - #### Django Crispy Forms
 ...
 
