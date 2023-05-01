@@ -2,99 +2,108 @@
 
 {% load crispy_forms_tags %}
 
-<div class="masthead">
-  <div class="container">
-    <div class="row g-0">
-      <div class="col-md-6 masthead-text">
-        {{ post.title }}
-        <h1 class="post-title">
-        </h1>
-        <p class="post-subtitle"> {{ post.author }} | {{ post.created_on }} </p>
-      </div>
-      <div class="d-none d-md-block col-md-6 masthead-image">
-        {% if "placeholder" in post.featured_image.url %}
-        <img src="https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg" width="100%">
-        {% else %}
-        <img src="{{ post.featured_image.url }}" width="100%">
-        {% endif %}
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <div class="row">
-    <div class="col card mb-4  mt-3 left  top">
-      <div class="card-body">
-        <p class="card-text ">
-          <!-- safe - allows including HTML tags and special symbols in the template without escaping it -->
-          {{ post.content|safe }}
-        </p>
-        <div class="row">
-
-          <div class="col-1">
-            <strong class="text-secondary"><i class="far fa-heart"></i>{{ post.number_of_likes }}</strong>
-          </div>
-          <div class="col-1">
-            <!--
-              - with ... as .. - allows us to create a variable inside the template;
-              - comments.count - returns the number of comments for the post;
-            -->
-            {% with comments.count as total_comments %}
-            <strong class="text-secondary"><i class="far fa-comments"></i>
-              {{ total_comments }}
-            </strong>
-            {% endwith %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <hr>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-8 card mb-4  mt-3 ">
-      <h3>Comments:</h3>
-      <div class="card-body">
-        {% for comment in comments %}
-        <div class="comments" style="padding: 10px;">
-          <p class="font-weight-bold">
-            {{ comment.name }}
-            <span class=" text-muted font-weight-normal">
-              {{ comment.created_on }}
-            </span> wrote:
+<main class="flex-shrink-0 main-bg">
+  <div class="masthead">
+    <div class="container">
+      <div class="row g-0">
+        <div class="col-md-6 masthead-text">
+          <h1 class="post-title">
+            {{ post.title }}
+          </h1>
+          <p class="post-subtitle">
+            <em>By</em> <span class="text-white">{{ post.author }}</span>
+            <em>published</em> <span class="text-white">{{ post.created_on }}</span>
           </p>
-          <!-- linebreaks - Replaces line breaks in plain text with appropriate HTML -->
-          {{ comment.body | linebreaks }}
         </div>
-        {% endfor %}
-      </div>
-    </div>
-    <div class="col-md-4 card mb-4  mt-3 ">
-      <div class="card-body">
-        {% if commented %}
-        <div class="alert alert-success" role="alert">
-          Thank you for your comment!
-          Your comment is awaiting moderation.
-        </div>
-        {% else %}
-          <!-- Comment block will appear only if the user is authenticated -->
-          {% if user.is_authenticated %}
-            <h3>Leave a comment:</h3>
-            <p>Posting as: {{ user.username }}</p>
-            <form action="" method="post" style="margin-top: 1.3em;">
-              {{ comment_form | crispy }}
-              {% csrf_token %}
-              <button type="submit" class="btn btn-signup">Submit</button>
-            </form>
+        <div class="d-none d-md-block col-md-6 masthead-image">
+          {% if "placeholder" in post.featured_image.url %}
+          <img src="https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg" width="100%">
+          {% else %}
+          <img src="{{ post.featured_image.url }}" width="100%">
           {% endif %}
-        {% endif %}
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col card mb-4 mt-3 left top">
+        <div class="card-body">
+          <p class="card-text ">
+            <!-- safe - allows including HTML tags and special symbols in the template without escaping it -->
+            {{ post.content|safe }}
+          </p>
+          <div class="row">
+
+            <div class="col-1">
+              <strong class="text-secondary">
+                <i class="far fa-heart"></i>
+                {{ post.number_of_likes }}
+              </strong>
+            </div>
+            <div class="col-1">
+              <!--
+                - with ... as .. - allows us to create a variable inside the template;
+                - comments.count - returns the number of comments for the post;
+              -->
+              {% with comments.count as total_comments %}
+              <strong class="text-secondary">
+                <i class="far fa-comments"></i>
+                {{ total_comments }}
+              </strong>
+              {% endwith %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8 card mb-4  mt-3 ">
+        <h3>Comments:</h3>
+        <div class="card-body">
+          {% for comment in comments %}
+          <div class="comments" style="padding: 10px;">
+            <p class="font-weight-bold">
+              {{ comment.name }}
+              <span class=" text-muted font-weight-normal">
+                {{ comment.created_on }}
+              </span> wrote:
+            </p>
+            <!-- linebreaks - Replaces line breaks in plain text with appropriate HTML -->
+            {{ comment.body | linebreaks }}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-md-4 card mb-4  mt-3 ">
+        <div class="card-body">
+          {% if commented %}
+          <div class="alert alert-success" role="alert">
+            Thank you for your comment!
+            Your comment is awaiting moderation.
+          </div>
+          {% else %}
+            <!-- Comment block will appear only if the user is authenticated -->
+            {% if user.is_authenticated %}
+              <h3>Leave a comment:</h3>
+              <p>Posting as: {{ user.username }}</p>
+              <form action="" method="post" style="margin-top: 1.3em;">
+                {{ comment_form | crispy }}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-signup float-end">Submit</button>
+              </form>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 
 {% endblock content %}
