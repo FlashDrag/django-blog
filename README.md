@@ -100,8 +100,8 @@
 
 ### Django Packages
 - [django-summernote](https://github.com/summernote/django-summernote) - WYSIWYG (full featured) editor for Django posts.
-
-- [django-crispy-forms](https://django-crispy-forms.readthedocs.io/en/latest/)
+- [django-allauth](https://django-allauth.readthedocs.io/en/latest/) - authentication, registration and account management.
+- [django-crispy-forms](https://django-crispy-forms.readthedocs.io/en/latest/) - styling Django forms.
 
 ## Project Setup
 - ### Virtual Environment
@@ -382,7 +382,7 @@ $ pip install django-summernote
     _This will allow you to use the Summernote editor in the app_
 
 - #### Django Allauth
-It's an integrated set of Django applications dealing with account authentication, registration, management, and third-party (social) account authentication. Allauth provides a lot of non styled [overridable templates](https://django-allauth.readthedocs.io/en/latest/templates.html) templates and settings out of the box.
+[Django Allauth](https://django-allauth.readthedocs.io/en/latest/overview.html) is an integrated set of Django applications dealing with account authentication, registration, management, and third-party (social) account authentication. Allauth provides a lot of non styled [overridable templates](https://django-allauth.readthedocs.io/en/latest/templates.html) templates and settings out of the box.
 
 ##### Setup:
 
@@ -439,7 +439,44 @@ It's an integrated set of Django applications dealing with account authenticatio
     - Now you can customize the templates as you like.
 
 - #### Django Crispy Forms
-...
+[Django Crispy Forms](https://django-crispy-forms.readthedocs.io/en/latest/) is a Django package with built-in support for the Bootstrap CSS framework. It allows you easily build, customize and reuse forms, without writing template code. It changes standard behavior of Django forms to make them more beautiful and user-friendly.
+##### Setup:
+- Install `django-crispy-forms` and update requirements.txt
+    ```
+    $ pip install django-crispy-forms
+    $ pip freeze > requirements.txt
+    ```
+- Add crispy_forms to your INSTALLED_APPS in settings.py:
+    ```
+    INSTALLED_APPS = [
+        ...
+        'crispy_forms',
+    ]
+    ```
+##### Template packs
+https://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
+
+###### For Bootstrap 4:
+- Install appropriate template pack for your CSS framework:
+    ```
+    $ pip install crispy-bootstrap4
+    ```
+- Add the following to the `settings.py` file of the project:
+    ```
+    INSTALLED_APPS = (
+        ...
+        "crispy_forms",
+        "crispy_bootstrap4",
+        ...
+    )
+
+    CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+
+    CRISPY_TEMPLATE_PACK = "bootstrap4"
+    ```
+**Note**: _crispy-forms does not include static files. You will need to include the proper corresponding static files yourself depending on what CSS framework (Template pack) you are using. This might involve one or more CSS and JS files. Read CSS framework’s docs for help on how to set it up._
+
+
 
 ## Deployment
 1. Database: [ElephantSQL](https://www.elephantsql.com/)
