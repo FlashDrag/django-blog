@@ -294,95 +294,144 @@ The `showmigrations` command shows all migrations that have been applied or unap
 - #### Django Summernote
 It's a simple WYSIWYG editor for Django. It allows you to edit the content in a text area and format text content as you like.
 
-    [**Integrating Summernote In Django**:](https://djangocentral.com/integrating-summernote-in-django/)
+##### [Integrating Summernote In Django](https://djangocentral.com/integrating-summernote-in-django/)
+
+```
+$ pip install django-summernote
+```
+
+- Add `django_summernote` to the `INSTALLED_APPS` list in `settings.py`:
 
     ```
-    $ pip install django-summernote
+    INSTALLED_APPS = [
+        ...
+        'django_summernote',
+    ]
+
+    SUMMERNOTE_THEME = 'bs4'  # Show summernote with Bootstrap4
     ```
 
-    - Add `django_summernote` to the `INSTALLED_APPS` list in `settings.py`:
+- Add the following to the `urls.py` file of the project:
 
-        ```
-        INSTALLED_APPS = [
-            ...
-            'django_summernote',
-        ]
+    ```
+    from django.urls import path, include
 
-        SUMMERNOTE_THEME = 'bs4'  # Show summernote with Bootstrap4
-        ```
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('summernote/', include('django_summernote.urls')),
+    ]
+    ```
+- Run migrations:
 
-    - Add the following to the `urls.py` file of the project:
+    ```
+    $ python manage.py migrate
+    ```
+- Add the following to the `models.py` file of the app:
 
-        ```
-        from django.urls import path, include
+    ```
+    from django.db import models
+    from django_summernote.fields import SummernoteTextField
 
-        urlpatterns = [
-            path('admin/', admin.site.urls),
-            path('summernote/', include('django_summernote.urls')),
-        ]
-        ```
-    - Run migrations:
+    class Post(models.Model):
+        ...
+        content = SummernoteTextField()
+    ```
+    _This will allow you to use the Summernote editor in the app_
 
-        ```
-        $ python manage.py migrate
-        ```
-    - Add the following to the `models.py` file of the app:
+- Add the following to the `admin.py` file of the app:
 
-        ```
-        from django.db import models
-        from django_summernote.fields import SummernoteTextField
+    ```
+    from django.contrib import admin
+    from .models import Post
+    from django_summernote.admin import SummernoteModelAdmin
 
-        class Post(models.Model):
-            ...
-            content = SummernoteTextField()
-        ```
-        _This will allow you to use the Summernote editor in the app_
+    class PostAdmin(SummernoteModelAdmin):
+        summernote_fields = ('content',)
+    admin.site.register(Post, PostAdmin)
+    ```
+    _This will allow you to use the Summernote editor in the admin panel_
 
-    - Add the following to the `admin.py` file of the app:
+[**USAGE**:](https://github.com/summernote/django-summernote#usage)
 
-        ```
-        from django.contrib import admin
-        from .models import Post
-        from django_summernote.admin import SummernoteModelAdmin
+- To use the Summernote editor in the admin panel, you need to add the following to `admin.py` file of the app:
 
-        class PostAdmin(SummernoteModelAdmin):
-            summernote_fields = ('content',)
-        admin.site.register(Post, PostAdmin)
-        ```
-        _This will allow you to use the Summernote editor in the admin panel_
+    ```
+    from django.contrib import admin
+    from .models import Post
+    from django_summernote.admin import SummernoteModelAdmin
 
-    [**USAGE**:](https://github.com/summernote/django-summernote#usage)
+    @admin.register(Post)
+    class PostAdmin(SummernoteModelAdmin):
+        summernote_fields = ('content',)
+    ```
+- To use the Summernote editor in the app, you need to add the following to `forms.py` file of the app:
 
-    - To use the Summernote editor in the admin panel, you need to add the following to `admin.py` file of the app:
+    ```
+    from django import forms
+    from .models import Post
+    from django_summernote.widgets import SummernoteWidget
 
-        ```
-        from django.contrib import admin
-        from .models import Post
-        from django_summernote.admin import SummernoteModelAdmin
+    class PostForm(forms.ModelForm):
+        class Meta:
+            model = Post
+            fields = '__all__'
+            widgets = {
+                'content': SummernoteWidget(),
+            }
+    ```
+    _This will allow you to use the Summernote editor in the app_
 
-        @admin.register(Post)
-        class PostAdmin(SummernoteModelAdmin):
-            summernote_fields = ('content',)
-        ```
-    - To use the Summernote editor in the app, you need to add the following to `forms.py` file of the app:
+- #### Django Allauth
+It's an integrated set of Django applications dealing with account authentication, registration, management, and third-party (social) account authentication. Allauth provides a lot of non styled [overridable templates](https://django-allauth.readthedocs.io/en/latest/templates.html) templates and settings out of the box.
 
-        ```
-        from django import forms
-        from .models import Post
-        from django_summernote.widgets import SummernoteWidget
+##### Setup:
 
-        class PostForm(forms.ModelForm):
-            class Meta:
-                model = Post
-                fields = '__all__'
-                widgets = {
-                    'content': SummernoteWidget(),
-                }
-        ```
-        _This will allow you to use the Summernote editor in the app_
+- Install `django-allauth` and update requirements.txt
+    ```
+    $ pip install django-allauth
+    $ pip freeze > requirements.txt
+    ```
+
+- Add AllAuth URLs to the main `urls.py` file of the project:
+    ```
+    urlpatterns = [
+        ...
+        path('accounts/', include('allauth.urls')),
+    ]
+    ```
+
+- Add following to the `settings.py` file of the project:
+    ```
+    INSTALLED_APPS = [
+        ...
+        # 'django.contrib.messages',
+        'django.contrib.sites',
+        'allauth',
+        'allauth.account',
+        'allauth.socialaccount',
+    ]
+
+    # The SITE_ID setting specifies the database ID of the Site object associated with that particular settings file. So now the django app handle multiple sites from one database.
+    SITE_ID = 1
+
+    # Specifies the URL that the user will be redirected to after a successful login or logout.
+    LOGIN_REDIRECT_URL = '/'
+    LOGOUT_REDIRECT_URL = '/'
+
+    # Determines the e-mail verification method during signup. None means no e-mail verification is required.
+    ACCOUNT_EMAIL_VERIFICATION = 'none'
+    ```
+
+- Run migrations:
+    ```
+    $ python manage.py migrate
+    ```
+
+- Go to the `/accounts/signup/` URL to create a new account.
+    _Logout from the admin panel to use the allauth signup page, otherwise it will redirect to the admin panel_
 
 - #### Django Crispy Forms
-
+...
 
 ## Deployment
 1. Database: [ElephantSQL](https://www.elephantsql.com/)
