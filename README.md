@@ -474,6 +474,15 @@ https://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 
     CRISPY_TEMPLATE_PACK = "bootstrap4"
     ```
+- To use the Bootstrap 4 template pack, add the following to the `base.html` file of the project:
+    ```
+    {% load crispy_forms_tags %}
+    ```
+- To display a form, use `form|crispy` filter. E.g: `{{ comment_form | crispy }}`.
+
+
+    _This will load the crispy forms template tags_
+
 **Note**: _crispy-forms does not include static files. You will need to include the proper corresponding static files yourself depending on what CSS framework (Template pack) you are using. This might involve one or more CSS and JS files. Read CSS framework’s docs for help on how to set it up._
 
 
