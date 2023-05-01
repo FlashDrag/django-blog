@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'django_summernote',
     'crispy_forms',
-    "crispy_bootstrap4",
+    "crispy_bootstrap5",
     'blog',
 ]
 
@@ -61,8 +61,10 @@ LOGOUT_REDIRECT_URL = '/'
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
-CRISPY_TEMPLATE_PACK = "bootstrap4"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+SUMMERNOTE_THEME = 'bs5'  # Show summernote with Bootstrap5 theme
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

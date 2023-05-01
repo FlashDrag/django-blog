@@ -93,7 +93,7 @@
 
 ## Technologies Used
 - [Django](https://www.djangoproject.com/)
-- [Bootstrap](https://getbootstrap.com/)
+- [Bootstrap v.5.0](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
 - [PostgreSQL (ElephantSQL)](https://www.elephantsql.com/)
 - [Cloudinary](https://cloudinary.com/)
 - [Heroku](https://www.heroku.com/)
@@ -308,7 +308,7 @@ $ pip install django-summernote
         'django_summernote',
     ]
 
-    SUMMERNOTE_THEME = 'bs4'  # Show summernote with Bootstrap4
+    SUMMERNOTE_THEME = 'bs5'  # Show summernote with Bootstrap5
     ```
 
 - Add the following to the `urls.py` file of the project:
@@ -456,32 +456,37 @@ $ pip install django-summernote
 ##### Template packs
 https://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 
-###### For Bootstrap 4:
+###### Crispy Bootstrap 5:
+https://github.com/django-crispy-forms/crispy-bootstrap5
+
 - Install appropriate template pack for your CSS framework:
     ```
-    $ pip install crispy-bootstrap4
+    $ pip install crispy-bootstrap5
     ```
 - Add the following to the `settings.py` file of the project:
     ```
     INSTALLED_APPS = (
         ...
         "crispy_forms",
-        "crispy_bootstrap4",
+        "crispy_bootstrap5",
         ...
     )
 
-    CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+    CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
-    CRISPY_TEMPLATE_PACK = "bootstrap4"
+    CRISPY_TEMPLATE_PACK = "bootstrap5"
     ```
-- To use the Bootstrap 4 template pack, add the following to the `base.html` file of the project:
+- To use the Bootstrap template pack, add the following to the `base.html` file of the project:
     ```
     {% load crispy_forms_tags %}
     ```
-- To display a form, use `form|crispy` filter. E.g: `{{ comment_form | crispy }}`.
-
 
     _This will load the crispy forms template tags_
+
+- To display a form using crispy, use the filter `|crispy`:
+    ```
+    {{ form|crispy }}
+    ```
 
 **Note**: _crispy-forms does not include static files. You will need to include the proper corresponding static files yourself depending on what CSS framework (Template pack) you are using. This might involve one or more CSS and JS files. Read CSS framework’s docs for help on how to set it up._
 
