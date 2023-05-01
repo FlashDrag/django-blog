@@ -68,7 +68,7 @@
             </span> wrote:
           </p>
           <!-- linebreaks - Replaces line breaks in plain text with appropriate HTML -->
-          {{ comment.body | safe | linebreaks }}
+          {{ comment.body | linebreaks }}
         </div>
         {% endfor %}
       </div>
