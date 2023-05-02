@@ -85,19 +85,20 @@
       </div>
       <div class="col-md-4 card mb-4  mt-3 ">
         <div class="card-body">
-          {% if commented %}
-          <div class="alert alert-success" role="alert">
-            Thank you for your comment!
-            Your comment is awaiting moderation.
-          </div>
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
           {% else %}
             <h3>Leave a comment:</h3>
             <!-- Comment block will appear only if the user is authenticated -->
             {% if user.is_authenticated %}
               <p>Posting as: {{ user.username }}</p>
-              <form action="" method="post" style="margin-top: 1.3em;">
-                {{ comment_form | crispy }}
+              <form method="post" style="margin-top: 1.3em;">
                 {% csrf_token %}
+                {{ comment_form | crispy }}
                 <button type="submit" class="btn btn-signup float-end">Submit</button>
               </form>
             {% else %}
