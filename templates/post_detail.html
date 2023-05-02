@@ -101,7 +101,14 @@
                 <button type="submit" class="btn btn-signup float-end">Submit</button>
               </form>
             {% else %}
-                <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'account_login' %}">
+                <!--
+                  - If the user is not authenticated, they will be prompted to sign in to comment on the post;
+                  - 'next' - parameter will redirect the user to 'next' page/url after successful login
+                  - request.path - returns the path of the requested page
+                  It's related to the hidden input field in the login form:
+                  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                -->
+                <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'account_login' %}?next={{request.path}}">
                   Sign In to comment on this post
                 </a>
             {% endif %}

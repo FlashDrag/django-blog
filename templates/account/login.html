@@ -36,6 +36,11 @@ Users login via the allauth.account.views.LoginView view over at /accounts/login
         {% csrf_token %}
         {{ form | crispy }}
         {% if redirect_field_value %}
+        <!-- This hidden input field is used to redirect the user to the page they were on before they logged in.
+        By default `redirect_field_name` is set to `next` and `redirect_field_value` is set to the current URL.
+        This means if the link to the login page will look like this: /href="{% url 'account_login' %}?next={{request.path}}"
+        accounts/login/?next=/post/test-post-1/, then the user will be redirected to /post/test-post-1/ after they log in.
+        -->
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}
         <button class="btn btn-signup float-end" type="submit">{% trans "Sign In" %}</button>
