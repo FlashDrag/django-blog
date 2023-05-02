@@ -6,14 +6,16 @@
   <div class="masthead">
     <div class="container">
       <div class="row g-0">
-        <div class="col-md-6 masthead-text">
-          <h1 class="post-title">
-            {{ post.title }}
-          </h1>
-          <p class="post-subtitle">
-            <em>By</em> <span class="text-white">{{ post.author }}</span>
-            <em>published</em> <span class="text-white">{{ post.created_on }}</span>
-          </p>
+        <div class="col-md-6 masthead-text d-flex">
+          <div class="align-self-center">
+            <h1 class="post-title">
+              {{ post.title }}
+            </h1>
+            <p class="post-subtitle">
+              <em>By</em> <span class="text-white">{{ post.author }}</span>
+              <em>published</em> <span class="text-white">{{ post.created_on }}</span>
+            </p>
+          </div>
         </div>
         <div class="d-none d-md-block col-md-6 masthead-image">
           {% if "placeholder" in post.featured_image.url %}

@@ -2,6 +2,10 @@ body {
   background-color: #F9FAFC;
 }
 
+hr {
+  margin-bottom: 0.3rem;
+}
+
 .brand {
   font-family: Lato, sans-serif;
   font-size: 1.4rem;
@@ -64,6 +68,7 @@ body {
   background-color: #445261;
   color: white;
   position: relative;
+  padding: 20px 5%;
 }
 
 .masthead-image {
@@ -95,13 +100,7 @@ body {
   color: #E84610;
 }
 
-.post-title {
-  margin-top: 20%;
-  margin-left: 5%;
-}
-
 .post-subtitle {
-  margin-left: 5%;
   color: lightgray;
 }
 
