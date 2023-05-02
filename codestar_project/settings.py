@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+from django.contrib.messages import constants as messages
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -33,8 +34,17 @@ DEBUG = os.getenv('DEBUG', False)
 ALLOWED_HOSTS = ['django--blog.herokuapp.com', '127.0.0.1']
 
 
-# Application definition
+# Custom message tags for Bootstrap 4, 5
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-secondary',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+ }
 
+
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
