@@ -39,6 +39,12 @@ class PostDetail(View):
         if post.likes.filter(id=self.request.user.id).exists():
             liked = True
 
+        # get only messages with the tag 'comment-alert'
+        storage = messages.get_messages(request)
+        comment_alerts = [message for message in storage
+                          if 'comment-alert'
+                          in (message.extra_tags, )]
+
         return render(
             request,
             "post_detail.html",
@@ -46,6 +52,7 @@ class PostDetail(View):
                 "post": post,
                 "comments": comments,
                 "liked": liked,
+                "comment_alerts": comment_alerts,
                 "comment_form": CommentForm(),
             },
         )
@@ -72,9 +79,11 @@ class PostDetail(View):
             new_comment.save()
 
             messages.success(request, 'Thank you for your comment!\n'
-                             'Your comment is awaiting moderation.')
+                             'Your comment is awaiting moderation.',
+                             extra_tags='comment-alert')
         else:
-            messages.danger(request, 'Error adding your comment')
+            messages.danger(request, 'Error adding your comment',
+                            extra_tags='comment-alert')
 
         # return redirect('post_detail', slug=post.slug)
 
