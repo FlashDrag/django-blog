@@ -91,15 +91,19 @@
             Your comment is awaiting moderation.
           </div>
           {% else %}
+            <h3>Leave a comment:</h3>
             <!-- Comment block will appear only if the user is authenticated -->
             {% if user.is_authenticated %}
-              <h3>Leave a comment:</h3>
               <p>Posting as: {{ user.username }}</p>
               <form action="" method="post" style="margin-top: 1.3em;">
                 {{ comment_form | crispy }}
                 {% csrf_token %}
                 <button type="submit" class="btn btn-signup float-end">Submit</button>
               </form>
+            {% else %}
+                <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'account_login' %}">
+                  Sign In to comment on this post
+                </a>
             {% endif %}
           {% endif %}
         </div>
