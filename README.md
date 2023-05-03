@@ -1,8 +1,8 @@
 # I Think Therefore I Blog
+The Django Blog App that performs full CRUD operations and has a user registration and login system. The app facilitates a interactive blogging experience for users and admins. It allows users to view, comment and like blog posts. Admins can manage posts including read posts, create drafts, publish, update and delete blog posts as well as they can also check and approve comments.
 
 ## Agile UX
-[Agile Project](https://github.com/FlashDrag/agile-project)
-
+[_Agile Project_](https://github.com/FlashDrag/agile-project)
 ### Project Planning
 - #### Design Thinking
     - **Empathize**.
@@ -13,10 +13,10 @@
     What do I want to seee when I visit a blog? What features do I want to see? What features do I not want to see?
 
 ### User Stories
-- #### GitHub's Kanban board
-    _GitHub's Kanban board was used to track user stories_
+#### GitHub's Kanban board
+_GitHub's Kanban board was used to track user stories_
 
-    [Creating Boards with Github Instructions Sheet](https://docs.google.com/document/d/1VSJtnhh_8djRyncotRzMJG9g_ATfiBHasUVZ1xTwybE/edit#heading=h.hvy9tw74f1o0)
+[Creating Boards with Github Instructions Sheet](https://docs.google.com/document/d/1VSJtnhh_8djRyncotRzMJG9g_ATfiBHasUVZ1xTwybE/edit#heading=h.hvy9tw74f1o0)
 
 - Create new project board
 - Open **Workflows** from the <**...**> menu at the top-right of the board.
@@ -41,20 +41,20 @@
     - Commit the changes (**Propose changes**):
     `Add a new user story template`
 
-- #### User Stories/GitHub Issues
-    _Create user stories as GitHub issues using the user stories template and add the issue to the project board._
+#### User Stories/GitHub Issues
+_Create user stories as GitHub issues using the user stories template and add the issue to the project board._
 
-    - View post list: As a Site User I can view a list of posts so that I can select one to read
-    - Open a post: As a Site User I can click on a post so that I can read the full text
-    - View likes: As a Site User / Admin I can view the number of likes on each post so that I can see which is the most popular or viral
-    - View comments: As a Site User / Admin I can view comments on an individual post so that I can read the conversation
-    - Account registration: As a Site User I can register an account so that I can comment and like
-    - Comment on a post: As a Site User I can leave comments on a post so that I can be involved in the conversation
-    - Like / Unlike: As a Site User I can like or unlike a post so that I can interact with the content
-    - Manage posts: As a Site Admin I can create, read, update and delete posts so that I can manage my blog content
-    - Site pagination: As a Site User I can view a paginated list of posts so that I can easily select a post to view.
-    - Create drafts: As a Site Admin I can create draft posts so that I can finish writing the content later
-    - Approve comments: As a Site Admin I can approve or disapprove comments so that I can filter out objectionable comments
+- View post list: As a Site User I can view a list of posts so that I can select one to read
+- Open a post: As a Site User I can click on a post so that I can read the full text
+- View likes: As a Site User / Admin I can view the number of likes on each post so that I can see which is the most popular or viral
+- View comments: As a Site User / Admin I can view comments on an individual post so that I can read the conversation
+- Account registration: As a Site User I can register an account so that I can comment and like
+- Comment on a post: As a Site User I can leave comments on a post so that I can be involved in the conversation
+- Like / Unlike: As a Site User I can like or unlike a post so that I can interact with the content
+- Manage posts: As a Site Admin I can create, read, update and delete posts so that I can manage my blog content
+- Site pagination: As a Site User I can view a paginated list of posts so that I can easily select a post to view.
+- Create drafts: As a Site Admin I can create draft posts so that I can finish writing the content later
+- Approve comments: As a Site Admin I can approve or disapprove comments so that I can filter out objectionable comments
 
 ### Entity Relationship Diagram(ERD)
 - #### POST MODEL
@@ -88,8 +88,46 @@
 
     **Options**: ascending order by created date
 
+## Features
+- ### User authentication and authorization
+- [x] User registration
+- [x] User login
+- [x] User logout
+
+- ### Blog post
+- [x] View all blog posts
+- [x] Blog post pagination
+
+- [x] View individual blog post in detail
+
+- [x] View number of likes on blog post
+- [x] View number of comments on blog post
+- [x] View blog post comments
+
+- [x] Add comment on blog post if logged in
+- [x] Like blog post if logged in
+- [x] Unlike blog post if logged in
 
 
+- ### Admin
+- [x] Create draft posts
+- [x] Publish draft posts
+- [x] Update and delete blog posts
+- [x] Create, read, update and delete comments
+- [x] Approve comments
+- [x] Search blog posts
+- [x] Filter blog posts
+- [x] Sort blog posts
+
+- ### Development Features
+- [x] Class based views in Django
+- [x] Django Cripsy forms
+- [x] Django Summernote
+- [x] Django Allauth
+- [x] Django Cloudinary Storage
+- [x] Django Pagination
+- [x] Like and Unlike blog post using Ajax
+- [x] Message Bootstrap alerts
 
 ## Technologies Used
 - [Django](https://www.djangoproject.com/)
