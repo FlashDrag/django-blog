@@ -33,6 +33,9 @@ DEBUG = os.getenv('DEBUG', False)
 
 ALLOWED_HOSTS = ['django--blog.herokuapp.com', '127.0.0.1']
 
+# Clickjacking protection. Means that you can
+# only embed your site in an iframe on your own domain.
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # Custom message tags for Bootstrap 4, 5
 MESSAGE_TAGS = {
