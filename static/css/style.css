@@ -141,6 +141,10 @@ hr {
   border: none;
 }
 
+#comment-btn {
+  cursor: pointer;
+}
+
 .fa-heart, .fa-comments {
   margin-right: 0.3rem;
 }

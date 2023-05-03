@@ -66,7 +66,7 @@
               -->
               {% with comments.count as total_comments %}
               <strong class="text-secondary d-flex justify-content-center align-items-center">
-                <i class="far fa-comments"></i>
+                <i class="far fa-comments" {% if user.is_authenticated %}id="comment-btn"{% endif %}></i>
                 {{ total_comments }}
               </strong>
               {% endwith %}
@@ -111,7 +111,7 @@
             <!-- Comment block will appear only if the user is authenticated -->
             {% if user.is_authenticated %}
               <p>Posting as: {{ user.username }}</p>
-              <form method="post" style="margin-top: 1.3em;">
+              <form id="comment-form" method="post" style="margin-top: 1.3em;">
                 {% csrf_token %}
                 {{ comment_form | crispy }}
                 <button type="submit" class="btn btn-signup float-end">Submit</button>

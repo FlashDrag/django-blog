@@ -34,4 +34,14 @@ $(document).ready(function () {
             }
         });
     });
+
+    // Focus on comment textarea when comment button is clicked
+    $("#comment-btn").click(function () {
+        myTimeout = setTimeout(function() {
+            $("#comment-form textarea").focus();
+        }, 500);
+        document.getElementById("comment-form").scrollIntoView({behavior: 'smooth', block: 'center'});
+        // clearTimeout(myTimeout);
+    }
+    );
 });
