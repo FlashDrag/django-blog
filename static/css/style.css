@@ -130,6 +130,8 @@ hr {
   color: #E84610;
   border: none;
   background: transparent;
+  margin: 0;
+  padding: 0;
 }
 
 .btn-like:hover,
@@ -137,4 +139,8 @@ hr {
   color: #E84610;
   background: transparent;
   border: none;
+}
+
+.fa-heart, .fa-comments {
+  margin-right: 0.3rem;
 }

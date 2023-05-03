@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic, View
+from django.views.generic.base import RedirectView
 from django.http import HttpResponse
 from django.contrib import messages
 from .models import Post
@@ -85,8 +86,45 @@ class PostDetail(View):
             messages.danger(request, 'Error adding your comment',
                             extra_tags='comment-alert')
 
-        # return redirect('post_detail', slug=post.slug)
+        # reverse() allows us to look up the URL for a given view by its name
+        # return HttpResponseRedirect(reverse('post_detail', args=[slug]))
 
         # redirect to the same page keeping the same scroll position
         # Note: keep in mind that history.back() does not 'reload' the page
         return HttpResponse('<script>history.back();</script>')
+
+
+class PostLikeToggle(RedirectView):
+    '''Toggle like/unlike for a post
+       with page refresh using with RedirectView'''
+    # append the query string to the redirect URL
+    query_string = True
+    # define the name of the URL pattern to be redirected to
+    pattern_name = "post_detail"
+
+    def get_redirect_url(self, *args, **kwargs):
+        slug = kwargs.get('slug')
+        post = get_object_or_404(Post, slug=slug)
+
+        # toggle like/unlike: remove/add the user to the post's likes list
+        if post.likes.filter(id=self.request.user.id).exists():
+            post.likes.remove(self.request.user)
+        else:
+            post.likes.add(self.request.user)
+
+        # generate the redirect URL
+        return super().get_redirect_url(*args, **kwargs)
+
+
+'''
+class PostLikeToggle(View):
+    # Toggle like/unlike for a post with post method
+    def post(self, request, slug, *args, **kwargs):
+        post = get_object_or_404(Post, slug=slug)
+        if post.likes.filter(id=request.user.id).exists():
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+
+        return HttpResponseRedirect(reverse('post_detail', args=[slug]))
+'''

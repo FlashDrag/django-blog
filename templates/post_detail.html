@@ -38,19 +38,34 @@
           </p>
           <div class="row">
 
-            <div class="col-1">
-              <strong class="text-secondary">
-                <i class="far fa-heart"></i>
-                {{ post.number_of_likes }}
+            <div class="col-1 text-center">
+              <strong class="text-secondary d-flex justify-content-center align-items-center">
+                {% if user.is_authenticated %}
+                <form class="d-inline" action="{% url 'post_like_toggle' post.slug %}" method="post">
+                  {% csrf_token %}
+                  {% if liked %}
+                    <button type="submit" name="blogpost_id" value="{{ post.slug }}" class="btn-like">
+                      <i class="fas fa-heart"></i>
+                    </button>
+                  {% else %}
+                    <button type="submit" name="blogpost_id" value="{{ post.slug }}" class="btn-like">
+                      <i class="far fa-heart"></i>
+                    </button>
+                  {% endif %}
+                </form>
+                {% else %}
+                  <span class="text-secondary"><i class="far fa-heart"></i></span>
+                {% endif %}
+                <span class="text-secondary">{{ post.number_of_likes }}</span>
               </strong>
             </div>
-            <div class="col-1">
+            <div class="col-1 text-center">
               <!--
                 - with ... as .. - allows us to create a variable inside the template;
                 - comments.count - returns the number of comments for the post;
               -->
               {% with comments.count as total_comments %}
-              <strong class="text-secondary">
+              <strong class="text-secondary d-flex justify-content-center align-items-center">
                 <i class="far fa-comments"></i>
                 {{ total_comments }}
               </strong>
