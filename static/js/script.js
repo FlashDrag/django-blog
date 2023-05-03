@@ -1,4 +1,12 @@
 $(document).ready(function () {
+    // Bootstrap Alert auto close
+    const alert = $("#auto-dissmissible-alert");
+    if (alert.length) {
+        alert.fadeTo(2000, 500).slideUp(500, function () {
+            this.remove();
+        });
+    }
+
     // Toggle like button on click and update like count without reloading the page
     $("#like-form").submit(function (e) {
         e.preventDefault();
@@ -37,11 +45,10 @@ $(document).ready(function () {
 
     // Focus on comment textarea when comment button is clicked
     $("#comment-btn").click(function () {
-        myTimeout = setTimeout(function() {
+        myTimeout = setTimeout(function () {
             $("#comment-form textarea").focus();
         }, 500);
-        document.getElementById("comment-form").scrollIntoView({behavior: 'smooth', block: 'center'});
+        document.getElementById("comment-form").scrollIntoView({ behavior: 'smooth', block: 'center' });
         // clearTimeout(myTimeout);
-    }
-    );
+    });
 });
