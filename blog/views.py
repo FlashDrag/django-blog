@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic, View
-from django.views.generic.base import RedirectView
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from .models import Post
 from .forms import CommentForm
@@ -83,8 +82,8 @@ class PostDetail(View):
                              'Your comment is awaiting moderation.',
                              extra_tags='comment-alert')
         else:
-            messages.danger(request, 'Error adding your comment',
-                            extra_tags='comment-alert')
+            messages.error(request, 'Error adding your comment',
+                           extra_tags='comment-alert')
 
         # reverse() allows us to look up the URL for a given view by its name
         # return HttpResponseRedirect(reverse('post_detail', args=[slug]))
@@ -94,9 +93,10 @@ class PostDetail(View):
         return HttpResponse('<script>history.back();</script>')
 
 
+'''
 class PostLikeToggle(RedirectView):
-    '''Toggle like/unlike for a post
-       with page refresh using with RedirectView'''
+    # Toggle like/unlike for a post
+    # with page refresh using with RedirectView
     # append the query string to the redirect URL
     query_string = True
     # define the name of the URL pattern to be redirected to
@@ -115,8 +115,6 @@ class PostLikeToggle(RedirectView):
         # generate the redirect URL
         return super().get_redirect_url(*args, **kwargs)
 
-
-'''
 class PostLikeToggle(View):
     # Toggle like/unlike for a post with post method
     def post(self, request, slug, *args, **kwargs):
@@ -128,3 +126,29 @@ class PostLikeToggle(View):
 
         return HttpResponseRedirect(reverse('post_detail', args=[slug]))
 '''
+
+
+class PostLikeToggle(View):
+    '''
+    Toggle like/unlike for a post with AJAX request
+    without page refresh.
+    The way is used insead redirectview and
+    `HttpResponse('<script>history.back();</script>')`
+    as I need to update number of likes without page refresh
+    when user clicks on like/unlike button.
+    '''
+
+    def post(self, request, slug, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return JsonResponse({'result': 'error',
+                                 'message': 'User not authenticated'})
+        post = get_object_or_404(Post, slug=slug)
+        if post.likes.filter(id=request.user.id).exists():
+            post.likes.remove(request.user)
+            result = 'unliked'
+        else:
+            post.likes.add(request.user)
+            result = 'liked'
+        like_count = post.number_of_likes()
+        return JsonResponse({'result': 'success', 'action': result,
+                             'like_count': like_count})

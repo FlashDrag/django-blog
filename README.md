@@ -93,6 +93,7 @@
 
 ## Technologies Used
 - [Django](https://www.djangoproject.com/)
+- [jQuery](https://jquery.com/), [Ajax](https://api.jquery.com/jquery.ajax/)
 - [Bootstrap v.5.0](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
 - [PostgreSQL (ElephantSQL)](https://www.elephantsql.com/)
 - [Cloudinary](https://cloudinary.com/)

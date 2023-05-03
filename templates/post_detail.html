@@ -41,7 +41,7 @@
             <div class="col-1 text-center">
               <strong class="text-secondary d-flex justify-content-center align-items-center">
                 {% if user.is_authenticated %}
-                <form class="d-inline" action="{% url 'post_like_toggle' post.slug %}" method="post">
+                <form id="like-form" class="d-inline" action="{% url 'post_like_toggle' post.slug %}" method="post">
                   {% csrf_token %}
                   {% if liked %}
                     <button type="submit" name="blogpost_id" value="{{ post.slug }}" class="btn-like">
@@ -56,7 +56,7 @@
                 {% else %}
                   <span class="text-secondary"><i class="far fa-heart"></i></span>
                 {% endif %}
-                <span class="text-secondary">{{ post.number_of_likes }}</span>
+                <span id="like_count" class="text-secondary">{{ post.number_of_likes }}</span>
               </strong>
             </div>
             <div class="col-1 text-center">
