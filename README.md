@@ -129,6 +129,13 @@ _Create user stories as GitHub issues using the user stories template and add th
 - [x] Like and Unlike blog post using Ajax
 - [x] Message Bootstrap alerts
 
+## Future Features
+- [ ] Sign in with social media accounts
+- [ ] User password reset
+- [ ] User: create, update and delete posts
+- [ ] User profile with own posts
+- [ ] User profile with liked posts
+
 ## Technologies Used
 - [Django](https://www.djangoproject.com/)
 - [jQuery](https://jquery.com/), [Ajax](https://api.jquery.com/jquery.ajax/)
@@ -584,6 +591,7 @@ https://pypi.org/project/django-cloudinary-storage/
 
         # URL path for your static files.
         # This is the URL path where your static files will be served from.
+        STATIC_URL = '/static/get-job/'
         # Example path for cloudinary css file: `https://res.cloudinary.com/<cloud_name>/raw/upload/v1/static/django_blog/css/style.css'
         # Dir where your static files are stored locally during development. This is where collectstatic will collect static files from.
         STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
