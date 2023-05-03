@@ -38,7 +38,7 @@
           </p>
           <div class="row">
 
-            <div class="col-1 text-center">
+            <div class="col-2 col-md-1 text-center">
               <strong class="text-secondary d-flex justify-content-center align-items-center">
                 {% if user.is_authenticated %}
                 <form id="like-form" class="d-inline" action="{% url 'post_like_toggle' post.slug %}" method="post">
@@ -59,7 +59,7 @@
                 <span id="like_count" class="text-secondary">{{ post.number_of_likes }}</span>
               </strong>
             </div>
-            <div class="col-1 text-center">
+            <div class="col-2 col-md-1 text-center">
               <!--
                 - with ... as .. - allows us to create a variable inside the template;
                 - comments.count - returns the number of comments for the post;
